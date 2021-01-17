@@ -32,17 +32,6 @@ class FileManagerTest extends TestCase {
         $this->fileManager->setRootPath($rootTypeWrong, 'mytheme');
     }
 
-    public function testCanCreateFile() {
-        $path = 'config/posttypes/test.yml';
-        $fileContent = 'test-content';
-        $this->fileManager->setRootPath('plugin', 'cd-core');
-        $this->fileManager->createFile($path, $fileContent);
-
-        $this->assertFileExists($this->fileManager->getRootPath() . '/' . $path);
-        $this->assertEquals($fileContent, file_get_contents($this->fileManager->getRootPath() . '/' . $path));
-        unlink($this->fileManager->getRootPath() . '/' . $path);
-    }
-
     public function testParsingTemplate() {
         $pathFile = '/tmp/test.tpl.php';
         $expectedContent = 'Hello World ok';

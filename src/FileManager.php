@@ -4,7 +4,7 @@ namespace Simply\Maker;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-final class FileManager {
+class FileManager {
     private string $rootPath;
     private Filesystem $filesystem;
 
@@ -36,15 +36,6 @@ final class FileManager {
     }
 
     /**
-     * @param string $path
-     * @param string $content
-     */
-    public function createFile(string $path, string $content) {
-        $path = $this->getRootPath() . '/' . $path;
-        $this->filesystem->appendToFile($path, $content);
-    }
-
-    /**
      * @param string $templatePath
      * @param array $parameters
      *
@@ -53,7 +44,15 @@ final class FileManager {
     public function parseTemplate(string $templatePath, array $parameters): string {
         ob_start();
         extract($parameters, EXTR_SKIP);
-        include $this->getRootPath() . '/' . $templatePath;
+        include $templatePath;
         return ob_get_clean();
+    }
+
+    public function dumpFile(string $filename, string $content) {
+        $this->filesystem->dumpFile($filename, $content);
+    }
+
+    public function fileExists($fileName = ''): bool {
+        return file_exists($this->getRootPath() . '/' . $fileName);
     }
 }

@@ -10,48 +10,32 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class MakeCommand extends Command {
+class MakeCommand extends AbstractMakeCommand {
     protected static $defaultName = 'simply:make:wpclicommand';
 
     public function configure() {
+        parent::configure();
         $this->setDescription('Create WCLI class command into a plugin.');
     }
 
     public function execute(InputInterface $input, OutputInterface $output) {
         $io = new SymfonyStyle($input, $output);
-        $pluginChoosedPath = '';
-        do {
-            if (isset($pluginExist) && !$pluginExist) {
-                $io->error('The plugin ' . $pluginToAdd . "doesn't exist.");
-            }
-
-            $pluginToAdd = $io->askQuestion(new Question('In which plugin do you want to generate this command ?', ''));
-            $pluginChoosedPath = WP_PLUGIN_DIR . '/' . $pluginToAdd;
-            $pluginExist = is_dir($pluginChoosedPath);
-        } while(empty($pluginToAdd) || !$pluginExist);
-
-
-        // generate name command
+        // the function set the root path for fileManager
+        $this->askRootPath($io, $this->fileManager);
         $commandName = $io->askQuestion(new Question('Name of your command', 'app:mycommand'));
-        $namespace = $io->askQuestion(new Question('Command class name', 'Namespace\MyCommand'));
-        $classNameExploded = explode('\\', $namespace);
-        $className = $classNameExploded[array_key_last($classNameExploded)];
-        $namespace = str_replace('\\' . $className, '', $namespace);
+        $fullClassName = $io->askQuestion(new Question('Command class name', 'Namespace\MyCommand'));
+        $classNameDetails = $this->generator->createClassNameDetails($fullClassName);
+        $targetPath = $this->fileManager->getRootPath() . '/src/Command/' . $classNameDetails->getClassName() . '.php';
+        $fileTemplate = __DIR__ . '/../Resources/skeleton/command/Command.tpl.php';
+        $tplYaml = __DIR__ . '/../Resources/skeleton/command/command.tpl.yaml.php';
+        $targetYaml = $this->fileManager->getRootPath() . '/config/command/' . strtolower($classNameDetails->getClassName()) . '.yaml';
 
-        // generate file
-        $fs = new Filesystem();
-        $fileTemplate = __DIR__ . '/../../resources/skeleton/command/Command.tpl.php';
-        $tplYaml = __DIR__ . '/../../resources/skeleton/command/command.tpl.yaml.php';
-        ob_start();
-        include $fileTemplate;
-        $content = ob_get_clean();
-        ob_start();
-        $fullClassName = $namespace . '\\' . $className;
-        include $tplYaml;
-        $contentYaml = ob_get_clean();
-        $fs->dumpFile($pluginChoosedPath . '/src/Command/' . $className . '.php', $content);
-        $fs->dumpFile($pluginChoosedPath . '/config/command/' . strtolower($className) . '.yaml', $contentYaml);
 
+        $this->generator->generateClass($classNameDetails, $targetPath, $fileTemplate, ['commandName' => $commandName]);
+        $this->generator->generateFile($targetYaml, $tplYaml, ['fullClassName' => $classNameDetails->getFullName()]);
+
+        $this->generator->writeChanges();
+        $io->success('WP CLI command created');
         return Command::SUCCESS;
     }
 }
