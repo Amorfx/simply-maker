@@ -3,7 +3,10 @@
     "license": "MIT",
     "require": {
         "symfony/filesystem": "^5.2",
-        "symfony/console": "^5.0"
+        "symfony/finder": "^5.2",
+        "symfony/console": "^5.0",
+        "symfony/string": "^5.2",
+        "symfony/translation-contracts": "^2.3"
     },
     "autoload": {
         "psr-4": {

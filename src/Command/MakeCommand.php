@@ -30,7 +30,6 @@ class MakeCommand extends AbstractMakeCommand {
         $tplYaml = __DIR__ . '/../Resources/skeleton/command/command.tpl.yaml.php';
         $targetYaml = $this->fileManager->getRootPath() . '/config/command/' . strtolower($classNameDetails->getClassName()) . '.yaml';
 
-
         $this->generator->generateClass($classNameDetails, $targetPath, $fileTemplate, ['commandName' => $commandName]);
         $this->generator->generateFile($targetYaml, $tplYaml, ['fullClassName' => $classNameDetails->getFullName()]);
 

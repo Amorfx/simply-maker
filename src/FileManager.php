@@ -3,6 +3,7 @@
 namespace Simply\Maker;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class FileManager {
     private string $rootPath;
@@ -13,6 +14,14 @@ class FileManager {
         $this->filesystem = new Filesystem();
     }
 
+    public function getPluginDirectory() {
+        return WP_PLUGIN_DIR;
+    }
+
+    public function getThemeDirectory() {
+        return WP_CONTENT_DIR . '/themes';
+    }
+
     /**
      * Setting the root path to create different files or directories
      * @param string $rootType
@@ -21,10 +30,10 @@ class FileManager {
     public function setRootPath(string $rootType, string $directory) {
         switch ($rootType) {
             case 'plugin':
-                $this->rootPath = WP_PLUGIN_DIR . '/' . $directory;
+                $this->rootPath = $this->getPluginDirectory() . '/' . $directory;
                 break;
             case 'theme':
-                $this->rootPath = WP_CONTENT_DIR . '/themes/' . $directory;
+                $this->rootPath = $this->getThemeDirectory() . '/' . $directory;
                 break;
             default:
                 throw new \RuntimeException('Can not have root path of type ' . $rootType);
@@ -54,5 +63,18 @@ class FileManager {
 
     public function fileExists($fileName = ''): bool {
         return file_exists($this->getRootPath() . '/' . $fileName);
+    }
+
+    public function getAvailableDirectories(string $directory): array {
+        $finder = new Finder();
+        $finder->in($directory)->depth('== 0')->directories();
+        $returnDirectories = [];
+        if ($finder->hasResults()) {
+            foreach ($finder as $dir) {
+                $returnDirectories[] = $dir->getRelativePathname();
+            }
+        }
+
+        return $returnDirectories;
     }
 }

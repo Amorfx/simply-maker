@@ -41,4 +41,22 @@ class FileManagerTest extends TestCase {
         $this->assertEquals($expectedContent, $content);
         unlink($pathFile);
     }
+
+    public function testGetAllAvailableDirectories() {
+        $tmpPluginDir = '/tmp/plugins';
+        if (!file_exists($tmpPluginDir)) {
+            mkdir($tmpPluginDir);
+        }
+
+        $allPlugins = ['a', 'b', 'c'];
+        foreach ($allPlugins as $namePlugin) {
+            $path = $tmpPluginDir . '/' . $namePlugin;
+            if (!file_exists($path)) {
+                mkdir($tmpPluginDir . '/' . $namePlugin);
+            }
+        }
+
+        $this->assertEqualsCanonicalizing($allPlugins, $this->fileManager->getAvailableDirectories($tmpPluginDir));
+        system('rm -rf -- ' . escapeshellarg($tmpPluginDir));
+    }
 }
