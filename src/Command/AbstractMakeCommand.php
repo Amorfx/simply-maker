@@ -20,6 +20,10 @@ abstract class AbstractMakeCommand extends Command {
         $this->generator = new Generator($this->fileManager);
     }
 
+    public function getSkeletonPath($path) {
+        return __DIR__ . '/../Resources/skeleton' . $path;
+    }
+
     public function askRootPath(SymfonyStyle $io, FileManager $fileManager): array {
         $rootType = $io->choice('Do you want to create it in plugin or theme ?', [
             'plugin' => 'plugin',

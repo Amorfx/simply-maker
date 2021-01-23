@@ -26,8 +26,8 @@ class MakeCommand extends AbstractMakeCommand {
         $fullClassName = $io->askQuestion(new Question('Command class name', 'Namespace\MyCommand'));
         $classNameDetails = $this->generator->createClassNameDetails($fullClassName);
         $targetPath = $this->fileManager->getRootPath() . '/src/Command/' . $classNameDetails->getClassName() . '.php';
-        $fileTemplate = __DIR__ . '/../Resources/skeleton/command/Command.tpl.php';
-        $tplYaml = __DIR__ . '/../Resources/skeleton/command/command.tpl.yaml.php';
+        $fileTemplate = $this->getSkeletonPath('/command/Command.tpl.php');
+        $tplYaml = $this->getSkeletonPath('/command/command.tpl.yaml.php');
         $targetYaml = $this->fileManager->getRootPath() . '/config/command/' . strtolower($classNameDetails->getClassName()) . '.yaml';
 
         $this->generator->generateClass($classNameDetails, $targetPath, $fileTemplate, ['commandName' => $commandName]);

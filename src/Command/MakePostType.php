@@ -33,9 +33,8 @@ class MakePostType extends AbstractMakeCommand {
         $supportsTitle = $io->askQuestion(new ConfirmationQuestion('Is your post type support title ?', true));
         $supportsThumbnail = $io->askQuestion(new ConfirmationQuestion('Is your post type support thumbnail ?', true));
         $supportsEditor = $io->askQuestion(new ConfirmationQuestion('Is your post type support editor ?', false));
-        // $hasToCreateModel = $io->askQuestion(new ConfirmationQuestion('Do you want to create a class Model for your post type ?', true));
 
-        $tplConfig = __DIR__ . '/../Resources/skeleton/posttype/posttype.tpl.yaml.php';
+        $tplConfig = $this->getSkeletonPath('/posttype/posttype.tpl.yaml.php');
         $targetPath = $this->fileManager->getRootPath() . '/config/post-type/' . $postTypeSlug . '.yaml';
         $supports = [];
         if ($supportsTitle) {
