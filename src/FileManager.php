@@ -77,4 +77,8 @@ class FileManager {
 
         return $returnDirectories;
     }
+
+    public function mkdir($dirs) {
+        $this->filesystem->mkdir($dirs);
+    }
 }
