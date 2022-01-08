@@ -2,10 +2,10 @@
     "name": "clementdecou/simply-maker",
     "license": "MIT",
     "require": {
-        "symfony/filesystem": "^5.2",
-        "symfony/finder": "^5.2",
-        "symfony/console": "^5.0",
-        "symfony/string": "^5.2",
+        "symfony/filesystem": "^6.0",
+        "symfony/finder": "^6.0",
+        "symfony/console": "^6.0",
+        "symfony/string": "^6.0",
         "symfony/translation-contracts": "^2.3"
     },
     "autoload": {
