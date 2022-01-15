@@ -1,5 +1,7 @@
 {
     "name": "clementdecou/simply-maker",
+    "description": "Simply maker helps you create empty plugin, theme, hooks and more so you can forget about writing boilerplate code",
+    "homepage": "https://amorfx.github.io/simply-documentation/docs/simply-cli/intro",
     "license": "MIT",
     "require": {
         "symfony/filesystem": "^6.0",
