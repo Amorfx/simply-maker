@@ -1,0 +1,6 @@
+/*
+Theme Name: <?= $themeName . "\n" ?>
+Author: <?= $themeAuthorName . "\n" ?>
+Description: <?= $themeDescription . "\n" ?>
+Version: <?= $themeVersion . "\n" ?>
+*/
