@@ -1,13 +1,14 @@
 {
     "name": "clementdecou/simply-maker",
+    "type": "wordpress-muplugin",
     "description": "Simply maker helps you create empty plugin, theme, hooks and more so you can forget about writing boilerplate code",
     "homepage": "https://amorfx.github.io/simply-documentation/docs/simply-cli/intro",
     "license": "MIT",
     "require": {
-        "symfony/filesystem": "^6.0",
-        "symfony/finder": "^6.0",
-        "symfony/console": "^6.0",
-        "symfony/string": "^6.0",
+        "symfony/filesystem": "^6.1",
+        "symfony/finder": "^6.1",
+        "symfony/console": "^6.1",
+        "symfony/string": "^6.1",
         "symfony/translation-contracts": "^2.3"
     },
     "autoload": {
