@@ -1,0 +1,10 @@
+services:
+  Simply\Maker\Command\:
+    resource: '../src/Command/'
+    exclude:
+      - '../src/Command/AbstractMakeCommand.php'
+
+  Simply\Maker\Command\CommandsRegistry:
+    public: true
+    arguments:
+      - !tagged_iterator simply.commands
