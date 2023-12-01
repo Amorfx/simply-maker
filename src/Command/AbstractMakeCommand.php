@@ -20,11 +20,19 @@ abstract class AbstractMakeCommand extends Command
         $this->generator = new Generator($this->fileManager);
     }
 
-    public function getSkeletonPath($path)
+    public function getSkeletonPath(string $path): string
     {
         return __DIR__ . '/../Resources/skeleton' . $path;
     }
 
+    /**
+     * @param SymfonyStyle $io
+     * @param FileManager $fileManager
+     * @return array{
+     *     rootType: string,
+     *     directory: string
+     * }
+     */
     public function askRootPath(SymfonyStyle $io, FileManager $fileManager): array
     {
         $rootType = $io->choice('Do you want to create it in plugin or theme ?', [
@@ -32,7 +40,7 @@ abstract class AbstractMakeCommand extends Command
             'theme' => 'theme',
         ], 'plugin');
         do {
-            if (isset($directoryExist) && ! $directoryExist) {
+            if (isset($directoryExist) && ! $directoryExist && isset($directoryToAdd)) {
                 $io->error('The ' . $rootType . ' ' . $directoryToAdd . " doesn't exist.");
             }
 
