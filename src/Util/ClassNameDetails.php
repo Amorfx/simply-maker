@@ -2,24 +2,29 @@
 
 namespace Simply\Maker\Util;
 
-class ClassNameDetails {
+class ClassNameDetails
+{
     private string $className;
     private string $namespace;
 
-    public function __construct(string $className, string $namespace) {
+    public function __construct(string $className, string $namespace)
+    {
         $this->className = $className;
         $this->namespace = $namespace;
     }
 
-    public function getFullName(): string {
+    public function getFullName(): string
+    {
         return $this->namespace . '\\' . $this->className;
     }
 
-    public function getNamespace(): string {
+    public function getNamespace(): string
+    {
         return $this->namespace;
     }
 
-    public function getClassName(): string {
+    public function getClassName(): string
+    {
         return $this->className;
     }
 }

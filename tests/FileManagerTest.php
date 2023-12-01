@@ -5,11 +5,13 @@ namespace Simply\Maker\Test;
 use PHPUnit\Framework\TestCase;
 use Simply\Maker\FileManager;
 
-class FileManagerTest extends TestCase {
+class FileManagerTest extends TestCase
+{
     private $fileManager;
 
-    public function setUp(): void {
-        if (!defined('WP_CONTENT_DIR')) {
+    public function setUp(): void
+    {
+        if (! defined('WP_CONTENT_DIR')) {
             define('WP_CONTENT_DIR', '/var/www/wordpress/wp-content');
             define('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins');
         }
@@ -17,7 +19,8 @@ class FileManagerTest extends TestCase {
         $this->fileManager = new FileManager();
     }
 
-    public function testCanGetRelativeRootPath() {
+    public function testCanGetRelativeRootPath()
+    {
         $rootTypePlugin = 'plugin';
         $rootTypeTheme = 'theme';
         $rootTypeWrong = 'root';
@@ -32,7 +35,8 @@ class FileManagerTest extends TestCase {
         $this->fileManager->setRootPath($rootTypeWrong, 'mytheme');
     }
 
-    public function testParsingTemplate() {
+    public function testParsingTemplate()
+    {
         $pathFile = '/tmp/test.tpl.php';
         $expectedContent = 'Hello World ok';
         $variableContent = 'Hello World';
@@ -42,16 +46,17 @@ class FileManagerTest extends TestCase {
         unlink($pathFile);
     }
 
-    public function testGetAllAvailableDirectories() {
+    public function testGetAllAvailableDirectories()
+    {
         $tmpPluginDir = '/tmp/plugins';
-        if (!file_exists($tmpPluginDir)) {
+        if (! file_exists($tmpPluginDir)) {
             mkdir($tmpPluginDir);
         }
 
         $allPlugins = ['a', 'b', 'c'];
         foreach ($allPlugins as $namePlugin) {
             $path = $tmpPluginDir . '/' . $namePlugin;
-            if (!file_exists($path)) {
+            if (! file_exists($path)) {
                 mkdir($tmpPluginDir . '/' . $namePlugin);
             }
         }

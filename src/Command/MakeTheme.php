@@ -12,15 +12,18 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 /**
  * Command to create default theme for Simply Framework
  */
-class MakeTheme extends AbstractMakeCommand {
+class MakeTheme extends AbstractMakeCommand
+{
     protected static $defaultName = 'simply:make:theme';
 
-    public function configure() {
+    public function configure()
+    {
         parent::configure();
         $this->setDescription('Create theme with the boilerplate for Simply.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) {
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
         $io = new SymfonyStyle($input, $output);
         $slugger = new AsciiSlugger();
         $themeName = $io->askQuestion(new Question('Name of your theme ?'));
@@ -40,22 +43,23 @@ class MakeTheme extends AbstractMakeCommand {
         $tplStyle = $this->getSkeletonPath('/theme/style.tpl.css');
         // Create directory of theme + index + style
         $themePath = $this->fileManager->getThemeDirectory() . '/' . $themeDirectorySlug;
-        $this->fileManager->dumpFile($themePath . '/index.php', $this->fileManager->parseTemplate($tplIndex, array()));
-        $this->fileManager->dumpFile($themePath . '/functions.php', $this->fileManager->parseTemplate($tplFunctions, array(
+        $this->fileManager->dumpFile($themePath . '/index.php', $this->fileManager->parseTemplate($tplIndex, []));
+        $this->fileManager->dumpFile($themePath . '/functions.php', $this->fileManager->parseTemplate($tplFunctions, [
             'themeNamespace' => $themeNamespace,
-        )));
-        $this->fileManager->dumpFile($themePath . '/style.css', $this->fileManager->parseTemplate($tplStyle, array(
+        ]));
+        $this->fileManager->dumpFile($themePath . '/style.css', $this->fileManager->parseTemplate($tplStyle, [
             'themeName' => $themeName,
             'themeAuthorName' => $themeAuthorName,
             'themeDescription' => $themeDescription,
             'themeVersion' => $themeVersion,
-        )));
+        ]));
         // Create theme default directories
         $this->fileManager->mkdir($themePath . '/config');
         $this->fileManager->mkdir($themePath . '/src');
         $this->fileManager->mkdir($themePath . '/views');
 
         $io->success('Theme created');
+
         return Command::SUCCESS;
     }
 }

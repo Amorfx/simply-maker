@@ -1,7 +1,7 @@
 <?= "<?php\n"; ?>
 /*
 Plugin Name: <?= $pluginName . "\n" ?>
-<?php if (!empty($pluginDescription)): ?>
+<?php if (! empty($pluginDescription)): ?>
 Description: <?= $pluginDescription . "\n" ?>
 <?php endif; ?>
 Author: <?= $pluginAuthorName . "\n" ?>

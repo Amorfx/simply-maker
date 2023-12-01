@@ -8,19 +8,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
-class MakePostType extends AbstractMakeCommand {
+class MakePostType extends AbstractMakeCommand
+{
     protected static $defaultName = 'simply:make:post-type';
 
-    public function configure() {
+    public function configure()
+    {
         parent::configure();
         $this->setDescription('Create a post type in WordPress.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) {
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
         $io = new SymfonyStyle($input, $output);
         $slugger = new AsciiSlugger();
 
@@ -49,9 +50,9 @@ class MakePostType extends AbstractMakeCommand {
 
         $tplVariables = [
             'postTypeSlug' => $postTypeSlug,
-            'isPublic' => $isPublic ? 'true': 'false',
+            'isPublic' => $isPublic ? 'true' : 'false',
             'postTypeName' => $postTypeName,
-            'supports' => $supports
+            'supports' => $supports,
         ];
 
         $this->generator->generateFile($targetPath, $tplConfig, $tplVariables);

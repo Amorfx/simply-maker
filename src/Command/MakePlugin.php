@@ -12,15 +12,18 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 /**
  * Command to create default plugin for Simply Framework
  */
-class MakePlugin extends AbstractMakeCommand {
+class MakePlugin extends AbstractMakeCommand
+{
     protected static $defaultName = 'simply:make:plugin';
 
-    public function configure() {
+    public function configure()
+    {
         parent::configure();
         $this->setDescription('Create plugin with the boilerplate for Simply.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) {
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
         $io = new SymfonyStyle($input, $output);
         $slugger = new AsciiSlugger();
         $pluginName = $io->askQuestion(new Question('Name of your plugin ?'));
@@ -38,19 +41,22 @@ class MakePlugin extends AbstractMakeCommand {
         $tplEnterpoint = $this->getSkeletonPath('/plugin/enterpoint.tpl.php');
         // Create directory of plugin + enterpoint
         $pluginPath = $this->fileManager->getPluginDirectory() . '/' . $pluginDirectorySlug;
-        $this->fileManager->dumpFile($pluginPath . '/' . $pluginDirectorySlug . '.php',
-            $this->fileManager->parseTemplate($tplEnterpoint, array(
+        $this->fileManager->dumpFile(
+            $pluginPath . '/' . $pluginDirectorySlug . '.php',
+            $this->fileManager->parseTemplate($tplEnterpoint, [
                 'pluginName' => $pluginName,
                 'pluginDescription' => $pluginDescription,
                 'pluginAuthorName' => $pluginAuthorName,
                 'pluginVersion' => $pluginVersion,
-                'pluginNamespace' => $pluginNamespace
-            )));
+                'pluginNamespace' => $pluginNamespace,
+            ])
+        );
         // Create plugin default directory and src
         $this->fileManager->mkdir($pluginPath . '/config');
         $this->fileManager->mkdir($pluginPath . '/src');
 
         $io->success('Plugin created');
+
         return Command::SUCCESS;
     }
 }
