@@ -16,7 +16,7 @@ class CommandsRegistry
      */
     public function __construct(iterable $commands)
     {
-        $this->commands = iterator_to_array($commands);
+        $this->commands = iterator_to_array($commands); // @phpstan-ignore-line
     }
 
     /**
