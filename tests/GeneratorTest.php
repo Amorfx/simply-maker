@@ -8,7 +8,7 @@ use Simply\Maker\Generator;
 
 class GeneratorTest extends TestCase
 {
-    private $generator;
+    private Generator $generator;
 
     public function setUp(): void
     {
@@ -16,7 +16,7 @@ class GeneratorTest extends TestCase
         $this->generator = new Generator($fileManager);
     }
 
-    public function testCreateClassNameDetail()
+    public function testCreateClassNameDetail(): void
     {
         $fullClassName = 'ClementCore\Test\TestClass';
         $classNameDetail = $this->generator->createClassNameDetails($fullClassName);

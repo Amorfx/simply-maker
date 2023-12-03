@@ -16,14 +16,14 @@ class FileManager
         $this->filesystem = new Filesystem();
     }
 
-    public function getPluginDirectory()
+    public function getPluginDirectory(): string
     {
-        return WP_PLUGIN_DIR;
+        return WP_PLUGIN_DIR; // @phpstan-ignore-line
     }
 
-    public function getThemeDirectory()
+    public function getThemeDirectory(): string
     {
-        return WP_CONTENT_DIR . '/themes';
+        return WP_CONTENT_DIR . '/themes'; // @phpstan-ignore-line
     }
 
     /**
@@ -31,7 +31,7 @@ class FileManager
      * @param string $rootType
      * @param string $directory
      */
-    public function setRootPath(string $rootType, string $directory)
+    public function setRootPath(string $rootType, string $directory): void
     {
         switch ($rootType) {
             case 'plugin':
@@ -52,13 +52,7 @@ class FileManager
         return $this->rootPath;
     }
 
-    /**
-     * @param string $templatePath
-     * @param array $parameters
-     *
-     * @return string
-     */
-    public function parseTemplate(string $templatePath, array $parameters): string
+    public function parseTemplate(string $templatePath, array $parameters): string|false // @phpstan-ignore-line
     {
         ob_start();
         extract($parameters, EXTR_SKIP);
@@ -67,16 +61,20 @@ class FileManager
         return ob_get_clean();
     }
 
-    public function dumpFile(string $filename, string $content)
+    public function dumpFile(string $filename, string $content): void
     {
         $this->filesystem->dumpFile($filename, $content);
     }
 
-    public function fileExists($fileName = ''): bool
+    public function fileExists(string $fileName = ''): bool
     {
         return file_exists($this->getRootPath() . '/' . $fileName);
     }
 
+    /**
+     * @param string $directory
+     * @return array<string>
+     */
     public function getAvailableDirectories(string $directory): array
     {
         $finder = new Finder();
@@ -91,7 +89,11 @@ class FileManager
         return $returnDirectories;
     }
 
-    public function mkdir($dirs)
+    /**
+     * @param string|iterable $dirs
+     * @return void
+     */
+    public function mkdir(string|iterable $dirs): void //@phpstan-ignore-line
     {
         $this->filesystem->mkdir($dirs);
     }
