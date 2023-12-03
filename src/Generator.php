@@ -7,6 +7,9 @@ use Simply\Maker\Util\ClassNameDetails;
 class Generator
 {
     private FileManager $fileManager;
+    /**
+     * @var array <string, array<string, mixed>>
+     */
     private array $pendingOperations;
 
     public function __construct(FileManager $fileManager)
@@ -24,7 +27,8 @@ class Generator
         return new ClassNameDetails($className, $namespace);
     }
 
-    public function generateClass(ClassNameDetails $classNameDetails, string $targetPath, string $template, array $variables = [])
+    // @phpstan-ignore-next-line
+    public function generateClass(ClassNameDetails $classNameDetails, string $targetPath, string $template, array $variables = []): void
     {
         $variables = array_merge($variables, [
             'namespace' => $classNameDetails->getNamespace(),
@@ -33,7 +37,8 @@ class Generator
         $this->addOperation($targetPath, $template, $variables);
     }
 
-    public function generateFile(string $targetPath, string $template, array $variables = [])
+    // @phpstan-ignore-next-line
+    public function generateFile(string $targetPath, string $template, array $variables = []): void
     {
         $this->addOperation($targetPath, $template, $variables);
     }
@@ -47,7 +52,7 @@ class Generator
      *
      * @throws \Exception
      */
-    private function addOperation(string $targetPath, string $templateName, array $variables)
+    private function addOperation(string $targetPath, string $templateName, array $variables): void //@phpstan-ignore-line
     {
         if (file_exists($targetPath)) {
             throw new \RuntimeException(sprintf('The file "%s" can\'t be generated because it already exists.', $targetPath));
@@ -68,10 +73,10 @@ class Generator
         ];
     }
 
-    public function writeChanges()
+    public function writeChanges(): void
     {
         foreach ($this->pendingOperations as $targetPath => $templateData) {
-            $this->fileManager->dumpFile($targetPath, $this->fileManager->parseTemplate($templateData['template'], $templateData['variables']));
+            $this->fileManager->dumpFile($targetPath, (string) $this->fileManager->parseTemplate($templateData['template'], $templateData['variables']));
         }
     }
 }

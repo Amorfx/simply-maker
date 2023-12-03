@@ -43,7 +43,7 @@ class MakePlugin extends AbstractMakeCommand
         $pluginPath = $this->fileManager->getPluginDirectory() . '/' . $pluginDirectorySlug;
         $this->fileManager->dumpFile(
             $pluginPath . '/' . $pluginDirectorySlug . '.php',
-            $this->fileManager->parseTemplate($tplEnterpoint, [
+            (string) $this->fileManager->parseTemplate($tplEnterpoint, [
                 'pluginName' => $pluginName,
                 'pluginDescription' => $pluginDescription,
                 'pluginAuthorName' => $pluginAuthorName,

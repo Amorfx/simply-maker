@@ -43,11 +43,11 @@ class MakeTheme extends AbstractMakeCommand
         $tplStyle = $this->getSkeletonPath('/theme/style.tpl.css');
         // Create directory of theme + index + style
         $themePath = $this->fileManager->getThemeDirectory() . '/' . $themeDirectorySlug;
-        $this->fileManager->dumpFile($themePath . '/index.php', $this->fileManager->parseTemplate($tplIndex, []));
-        $this->fileManager->dumpFile($themePath . '/functions.php', $this->fileManager->parseTemplate($tplFunctions, [
+        $this->fileManager->dumpFile($themePath . '/index.php', (string) $this->fileManager->parseTemplate($tplIndex, []));
+        $this->fileManager->dumpFile($themePath . '/functions.php', (string) $this->fileManager->parseTemplate($tplFunctions, [
             'themeNamespace' => $themeNamespace,
         ]));
-        $this->fileManager->dumpFile($themePath . '/style.css', $this->fileManager->parseTemplate($tplStyle, [
+        $this->fileManager->dumpFile($themePath . '/style.css', (string) $this->fileManager->parseTemplate($tplStyle, [
             'themeName' => $themeName,
             'themeAuthorName' => $themeAuthorName,
             'themeDescription' => $themeDescription,

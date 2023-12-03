@@ -7,7 +7,7 @@ use Simply\Maker\FileManager;
 
 class FileManagerTest extends TestCase
 {
-    private $fileManager;
+    private FileManager $fileManager;
 
     public function setUp(): void
     {
@@ -19,7 +19,7 @@ class FileManagerTest extends TestCase
         $this->fileManager = new FileManager();
     }
 
-    public function testCanGetRelativeRootPath()
+    public function testCanGetRelativeRootPath(): void
     {
         $rootTypePlugin = 'plugin';
         $rootTypeTheme = 'theme';
@@ -35,7 +35,7 @@ class FileManagerTest extends TestCase
         $this->fileManager->setRootPath($rootTypeWrong, 'mytheme');
     }
 
-    public function testParsingTemplate()
+    public function testParsingTemplate(): void
     {
         $pathFile = '/tmp/test.tpl.php';
         $expectedContent = 'Hello World ok';
@@ -46,7 +46,7 @@ class FileManagerTest extends TestCase
         unlink($pathFile);
     }
 
-    public function testGetAllAvailableDirectories()
+    public function testGetAllAvailableDirectories(): void
     {
         $tmpPluginDir = '/tmp/plugins';
         if (! file_exists($tmpPluginDir)) {
