@@ -2,9 +2,9 @@ name: Unit Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -34,6 +34,6 @@ jobs:
 
       - name: Check phpstan
         run: composer run-script analyse
-        
+
       - name: Run test suite
         run: composer run-script test
