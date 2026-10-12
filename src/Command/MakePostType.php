@@ -2,6 +2,7 @@
 
 namespace Simply\Maker\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,17 +11,15 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
+#[AsCommand(name: 'simply:make:post-type', description: 'Create a post type in WordPress.')]
 class MakePostType extends AbstractMakeCommand
 {
-    protected static $defaultName = 'simply:make:post-type';
-
     public function configure()
     {
         parent::configure();
-        $this->setDescription('Create a post type in WordPress.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $slugger = new AsciiSlugger();

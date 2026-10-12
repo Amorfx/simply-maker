@@ -2,6 +2,7 @@
 
 namespace Simply\Maker\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,17 +13,15 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 /**
  * Command to create default plugin for Simply Framework
  */
+#[AsCommand(name: 'simply:make:plugin', description: 'Create plugin with the boilerplate for Simply.')]
 class MakePlugin extends AbstractMakeCommand
 {
-    protected static $defaultName = 'simply:make:plugin';
-
     public function configure()
     {
         parent::configure();
-        $this->setDescription('Create plugin with the boilerplate for Simply.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $slugger = new AsciiSlugger();
