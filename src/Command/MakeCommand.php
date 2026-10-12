@@ -2,23 +2,22 @@
 
 namespace Simply\Maker\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'simply:make:wpclicommand', description: 'Create WCLI class command into a plugin.')]
 class MakeCommand extends AbstractMakeCommand
 {
-    protected static $defaultName = 'simply:make:wpclicommand';
-
     public function configure()
     {
         parent::configure();
-        $this->setDescription('Create WCLI class command into a plugin.');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         // the function set the root path for fileManager
