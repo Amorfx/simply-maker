@@ -48,6 +48,7 @@ class MakePlugin extends AbstractMakeCommand
                 'pluginAuthorName' => $pluginAuthorName,
                 'pluginVersion' => $pluginVersion,
                 'pluginNamespace' => $pluginNamespace,
+                'pluginDirectorySlug' => $pluginDirectorySlug,
             ])
         );
         // Create plugin default directory and src
@@ -55,6 +56,11 @@ class MakePlugin extends AbstractMakeCommand
         $this->fileManager->mkdir($pluginPath . '/src');
 
         $io->success('Plugin created');
+        $io->note([
+            'Make the classes of src/ autoloadable: add this line to the "autoload.psr-4" section of composer.json,',
+            sprintf('"%s\\\\": "web/content/plugins/%s/src/"', $pluginNamespace, $pluginDirectorySlug),
+            'then run: composer dump-autoload',
+        ]);
 
         return Command::SUCCESS;
     }

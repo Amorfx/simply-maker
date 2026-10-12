@@ -43,4 +43,15 @@ class SkeletonTest extends TestCase
 
         $this->assertTrue(is_subclass_of('Simply\Maker\Test\Generated\\' . $className, $parent));
     }
+
+    public function testGeneratedPluginExplainsHowToAutoloadItsClasses(): void
+    {
+        $code = (new FileManager())->parseTemplate(dirname(__DIR__) . '/src/Resources/skeleton/plugin/enterpoint.tpl.php', [
+            'pluginName' => 'My plugin', 'pluginDescription' => '', 'pluginAuthorName' => 'John Doe',
+            'pluginVersion' => '1.0', 'pluginNamespace' => 'MyPlugin', 'pluginDirectorySlug' => 'my-plugin',
+        ]);
+
+        $this->assertStringContainsString('"MyPlugin\\\\": "web/content/plugins/my-plugin/src/"', (string) $code);
+        $this->assertStringContainsString("Simply::registerPlugin(__DIR__, 'MyPlugin');", (string) $code);
+    }
 }
