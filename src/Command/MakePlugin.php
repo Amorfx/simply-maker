@@ -56,11 +56,10 @@ class MakePlugin extends AbstractMakeCommand
         $this->fileManager->mkdir($pluginPath . '/src');
 
         $io->success('Plugin created');
-        $io->note([
-            'Make the classes of src/ autoloadable: add this line to the "autoload.psr-4" section of composer.json,',
-            sprintf('"%s\\\\": "web/content/plugins/%s/src/"', $pluginNamespace, $pluginDirectorySlug),
-            'then run: composer dump-autoload',
-        ]);
+        $io->note('Make the classes of src/ autoloadable: add this line to the "autoload.psr-4" section of composer.json, then run composer dump-autoload');
+        // Printed on its own line so that it can be copied as is (JSON escapes the namespace separators)
+        $io->writeln(sprintf('"%s\\\\": "web/content/plugins/%s/src/"', str_replace('\\', '\\\\', $pluginNamespace), $pluginDirectorySlug));
+        $io->newLine();
 
         return Command::SUCCESS;
     }
